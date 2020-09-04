@@ -1,2 +1,2 @@
 # app
-Aplicación dedicado al cumplimiento de entidades bancarías. 
+Aplicación de controles de seguridad al cumplimiento del marco legal a entidades financieras.
