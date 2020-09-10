@@ -9,13 +9,18 @@
                 </a>
             </div>
             <div class="col-md-3">
-                <a href="${pageContext.request.contextPath}/ServletControlador?accion=evaluacion" class="btn btn-primary">
-                    <i class="fas fa-file"></i> Evaluación
+                <a href="${pageContext.request.contextPath}/ServletControlador?accion=grafica" class="btn btn-primary">
+                    <i class="fa fa-line-chart"></i> Gráficas
                 </a>
             </div>
+            <!-- div class="col-md-3">
+                <a href="$pageContext.request.contextPath}/ServletControlador?accion=evaluacion" class="btn btn-primary">
+                    <i class="fas fa-file"></i> Evaluación
+                </a>
+            </div -->
             <div class="col-md-3">
                 <a href="${pageContext.request.contextPath}/ServletControlador?accion=reporte" class="btn btn-primary">
-                    <i class="fa fa-line-chart"></i> Reportes
+                    <i class="fas fa-file"></i> Reportes
                 </a>
             </div>
             <div class="col-md-3">

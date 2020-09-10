@@ -16,9 +16,9 @@ public class Evaluacion implements Serializable{
     @Basic(optional = false)
     @Column(name = "idevaluacion")
     private Integer idEvaluacion;
-    @Size(max = 45)
+    //@Size(max = 45)
     private String hallazgo;
-    @Size(max = 45)
+    //@Size(max = 45)
     private String recomendacion;
     @Size(max = 45)
     private String usuario_evaluacion;

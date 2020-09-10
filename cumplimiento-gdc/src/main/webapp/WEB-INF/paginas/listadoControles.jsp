@@ -1,7 +1,6 @@
 <meta http-equiv="Cache-Control" content="no-store" />
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
-
 <style>
     .my-custom-scrollbar {
         position: relative;
@@ -12,9 +11,13 @@
         display: block;
     }
 </style>
-<%-- definicion de la localidad para los formatos --%>
+<%-- definicion de la localidad para los formatos 
+                                    <td>${"Art. "}${control.articulo.getIdArticulo()}</td>
+                                    <td>${control.descripcion}</td>
+                                    <td>${control.nivel.getDescripcion()}</td>
+                                            <c:when test="${control.implementa == 1}">
+--%>
 <fmt:setLocale value="es_GT"/>
-
 <section id="clientes">
     <div class="container">
         <div class="row">
@@ -23,27 +26,29 @@
                     <!-- card-header = cabecera de una tarjeta
                          tarjeta es un contenedor de contenido flexible y extensible-->
                     <!-- table = clase, table-striped = agrega rayas de cebra a cualquier fila en la tabla -->
-                    <table class="table table-striped">
+                    <table id="tab" class="table table-striped">
                         <!-- thead-dark = agrega color gris claro u oscuro a las cabeceras de la tabla -->
                         <thead class="thead-dark">
                             <tr>
                                 <th>#</th>
+                                <th>Artículo</th>
                                 <th>Control</th>
                                 <th>CMMI</th>
                                 <th>Implementado</th>
                             </tr>
                         </thead>
-                        <tbody>
-                            <!-- Iteramos cada elemento de lista de clientes, atributo clientes del alcance request creado en servlet -->
+                        <tbody>                
+                            <!-- //int idcontrol, String control, int idarea, String area Iteramos cada elemento de lista de clientes, atributo clientes del alcance request creado en servlet -->
                             <c:forEach var="control" items="${controles}" varStatus="status">
                                 <tr>
                                     <!-- status.count = valor autoincrementable -->
                                     <td>${status.count}</td>
-                                    <td>${control.descripcion}</td>
-                                    <td>${control.nivel.getDescripcion()}</td>
+                                    <td>${"Art. "}${control.idcontrol}</td>
+                                    <td>${control.control}</td>
+                                    <td>${control.area}</td>
                                     <td>
                                         <c:choose>
-                                            <c:when test="${control.implementa == 1}">
+                                            <c:when test="${control.idarea == 1}">
                                                 <i class="fas fa-check" style="font-size:30px;color:green"></i>
                                             </c:when>
                                             <c:otherwise>
@@ -58,7 +63,6 @@
                     </table>
                 </div>
             </div>
-
             <!-- Tarjetas para los totales -->
             <div class="col-md-3">
                 <!-- bg-success = background verde -->
@@ -87,7 +91,6 @@
         </div>
     </div>
 </section>
-
 <!-- Agregar cliente MODAL, 
      al inicio / ya que debemos regresar a la raiz, porque estamos en un folder privado -->
 <jsp:include page="/WEB-INF/paginas/agregarEvaluacion.jsp"/>

@@ -35,6 +35,18 @@ public class ServletControlador extends HttpServlet {
                 //case "eliminar":
                 //    this.eliminarEvaluacion(request, response);
                 //    break;
+                case "graf1":
+                    this.grafica1(request, response);
+                    break;
+                case "graf2":
+                    this.grafica2(request, response);
+                    break;
+                case "graf3":
+                    this.grafica3(request, response);
+                    break;
+                case "graf4":
+                    this.grafica4(request, response);
+                    break;
                 case "evaluacion":
                     this.listarEvaluacion(request, response);
                     break;
@@ -44,14 +56,29 @@ public class ServletControlador extends HttpServlet {
                 case "reporte":
                     this.reporteCliente(request, response);
                     break;
+                case "reporte1":
+                    this.reporte1(request, response);
+                    break;
+                case "reporte2":
+                    this.reporte2(request, response);
+                    break;
+                case "reporte3":
+                    this.reporte3(request, response);
+                    break;
+                case "reporte4":
+                    this.reporte4(request, response);
+                    break;
+                case "reporte5":
+                    this.reporte5(request, response);
+                    break;
+                case "reporte6":
+                    this.reporte6(request, response);
+                    break;
                 case "listar":
                     switch (lista) {
                         case "control":
                             this.listarControl(request, response);
                             break;
-                        /*case "agregarEvaluacion":
-                            this.agregarEvaluacion(request, response);
-                            break;*/
                         default:
                             this.listarControl(request, response);
                     }
@@ -68,7 +95,7 @@ public class ServletControlador extends HttpServlet {
     }
 
     private void listarControl(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        List<Control> controles = controlService.listar();
+        List<Control> controles = cnn.listarControlPrin();//controlService.listar();
         List<Control> controlesImpl = controlService.contarImplementa();
         List<Control> controlesNoImpl = controlService.contarNoImplementa();
         System.out.println("controles = " + controles);
@@ -128,8 +155,8 @@ public class ServletControlador extends HttpServlet {
                     } catch (SQLException ex) {
                         ex.printStackTrace(System.out);
                     } catch (ParseException ex) {
-                    Logger.getLogger(ServletControlador.class.getName()).log(Level.SEVERE, null, ex);
-                }
+                        Logger.getLogger(ServletControlador.class.getName()).log(Level.SEVERE, null, ex);
+                    }
                 }
                 break;
 
@@ -159,10 +186,12 @@ public class ServletControlador extends HttpServlet {
     private void insertarEvaluacion(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException, SQLException, ParseException {
         int listaControl = Integer.parseInt(request.getParameter("listaControl"));
         System.out.println("listaControl = " + listaControl);
-        int listaImpacto = Integer.parseInt(request.getParameter("listaImpacto"));
-        System.out.println("listaImpacto = " + listaImpacto);
-        int listaSolucion = Integer.parseInt(request.getParameter("listaSolucion"));
-        System.out.println("listaSolucion = " + listaSolucion);
+        int listaNivel = Integer.parseInt(request.getParameter("listaNivel"));
+        System.out.println("listaNivel = " + listaNivel);
+        //int listaImpacto = Integer.parseInt(request.getParameter("listaImpacto"));
+        //System.out.println("listaImpacto = " + listaImpacto);
+        //int listaSolucion = Integer.parseInt(request.getParameter("listaSolucion"));
+        //System.out.println("listaSolucion = " + listaSolucion);
         String hallazgo = request.getParameter("hallazgo");
         System.out.println("hallazgo = " + hallazgo);
         String recomendacion = request.getParameter("recomendacion");
@@ -178,30 +207,53 @@ public class ServletControlador extends HttpServlet {
         int valorPeriodo = ev.size();
         int idperiodo = ++valorPeriodo;
         int valorProyecto = 0;
-        int nivel = 0;
-        if (valorPeriodo <= 6) {
+        int listaImpacto = 0;
+        int listaSolucion = 0;
+        int implementa = 0;
+        int bandera = 0;
+        List cbandera = cnn.listarControl();
+        int cband = cbandera.size();
+        if (listaNivel == 6) {
             valorProyecto = 1;
-            nivel = 1;
-        } else if (valorPeriodo > 6) {
+            listaImpacto = 3;
+            listaSolucion = 1;
+            implementa = 0;
+        } else if (listaNivel == 1) {
             valorProyecto = 2;
-            nivel = 2;
-        } else if (valorPeriodo > 13) {
+            listaImpacto = 3;
+            listaSolucion = 1;
+            implementa = 1;
+        } else if (listaNivel == 2) {
             valorProyecto = 3;
-            nivel = 3;
-        } else if (valorPeriodo > 21) {
+            listaImpacto = 3;
+            listaSolucion = 1;
+            implementa = 1;
+        } else if (listaNivel == 3) {
             valorProyecto = 4;
-            nivel = 4;
-        } else if (valorPeriodo > 25) {
+            listaImpacto = 2;
+            listaSolucion = 2;
+            implementa = 1;
+        } else if (listaNivel == 4) {
             valorProyecto = 5;
-            nivel = 5;
+            listaImpacto = 1;
+            listaSolucion = 3;
+            implementa = 1;
+        } else if (listaNivel == 5) {
+            valorProyecto = 5;
+            listaImpacto = 1;
+            listaSolucion = 3;
+            implementa = 1;
         }
 
-        Evalua evalua = new Evalua(hallazgo, recomendacion, valorUsuario, valorFecha, listaControl, valorProyecto, idperiodo, listaImpacto, listaSolucion);
+        Evalua evalua = new Evalua(hallazgo, recomendacion, valorUsuario, valorFecha, listaControl, valorProyecto, idperiodo, listaImpacto, listaSolucion, listaNivel);
         //insert
         int resultado = cnn.insert(evalua);
         //update
-        Evalua eva = new Evalua(listaControl, nivel);
-        int resultado2 = cnn.update(eva);
+        Evalua eva = new Evalua(listaControl, listaNivel, implementa, bandera);
+        int resultado3 = cnn.update(eva);
+        if (cband == 1){
+            int resultado2 = cnn.updateband(1);
+        }
         this.listarControl(request, response);
     }
 
@@ -217,15 +269,6 @@ public class ServletControlador extends HttpServlet {
     private void reporteCliente(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         String jspReporte = "generareporte.jsp";
         request.getRequestDispatcher(jspReporte).forward(request, response);
-        /*response.setContentType("application/vnd.ms-excel");
-        response.setHeader("Content-disposition", "filename=sumarnum.xls");
-        PrintWriter out = response.getWriter();
-        try {
-            out.println("Numero1:\t1");
-            out.println("Numero2:\t2");
-        } finally {
-            out.close();
-        }*/
     }
 
     private void login(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
@@ -236,5 +279,114 @@ public class ServletControlador extends HttpServlet {
     private void logout(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         request.getSession().invalidate();
         this.login(request, response);
+    }
+
+    private void reporte1(HttpServletRequest request, HttpServletResponse response) throws IOException {
+        response.setContentType("application/vnd.ms-excel");
+        response.setHeader("Content-disposition", "filename=ley_reglamento.xls");
+        PrintWriter out = response.getWriter();
+        try {
+            List<Pivot> r = cnn.listarReporte1();
+            out.println("IdReglamento\tReglamento\tIdCapitulo\tCapitulo\tIdArticulo\tArticulo");
+            for (Pivot rep1 : r) {
+                out.println(rep1.getIdreglamento() + "\t" + rep1.getReglamento() + "\t" + rep1.getIdcapitulo() + "\t" + rep1.getCapitulo() + "\t" + rep1.getIdarticulo() + "\t" + rep1.getArticulo());
+            }
+        } finally {
+            out.close();
+        }
+    }
+
+    private void reporte2(HttpServletRequest request, HttpServletResponse response) throws IOException {
+        response.setContentType("application/vnd.ms-excel");
+        response.setHeader("Content-disposition", "filename=proyecto_implementacion.xls");
+        PrintWriter out = response.getWriter();
+        try {
+            List<Pivot> r = cnn.listarReporte2();
+            out.println("IdProyecto\tProyecto\tPresupuesto\tTiempo");
+            for (Pivot rep1 : r) {
+                out.println(rep1.getIdproyecto() + "\t" + rep1.getProyecto() + "\t" + rep1.getPresupuesto() + "\t" + rep1.getTiempo());
+            }
+        } finally {
+            out.close();
+        }
+    }
+
+    private void reporte3(HttpServletRequest request, HttpServletResponse response) throws IOException {
+        response.setContentType("application/vnd.ms-excel");
+        response.setHeader("Content-disposition", "filename=area_control.xls");
+        PrintWriter out = response.getWriter();
+        try {
+            List<Pivot> r = cnn.listarReporte3();
+            out.println("IdArea\tArea\tIdControl\tControl");
+            for (Pivot rep1 : r) {
+                out.println(rep1.getIdarea() + "\t" + rep1.getArea() + "\t" + rep1.getIdcontrol() + "\t" + rep1.getControl());
+            }
+        } finally {
+            out.close();
+        }
+    }
+
+    private void reporte4(HttpServletRequest request, HttpServletResponse response) throws IOException {
+        response.setContentType("application/vnd.ms-excel");
+        response.setHeader("Content-disposition", "filename=ley_control.xls");
+        PrintWriter out = response.getWriter();
+        try {
+            List<Pivot> r = cnn.listarReporte4();
+            out.println("IdCapitulo\tCapitulo\tIdArticulo\tArticulo\tIdControl\tControl");
+            for (Pivot rep1 : r) {
+                out.println(rep1.getIdreglamento() + "\t" + rep1.getReglamento() + "\t" + rep1.getIdcapitulo() + "\t" + rep1.getCapitulo() + "\t" + rep1.getIdarticulo() + "\t" + rep1.getArticulo());
+            }
+        } finally {
+            out.close();
+        }
+    }
+
+    private void reporte5(HttpServletRequest request, HttpServletResponse response) throws IOException {
+        response.setContentType("application/vnd.ms-excel");
+        response.setHeader("Content-disposition", "filename=control_cmmi.xls");
+        PrintWriter out = response.getWriter();
+        try {
+            List<Pivot> r = cnn.listarReporte5();
+            out.println("IdControl\tControl\tIdNivel\tNivel\tImplementado");
+            for (Pivot rep1 : r) {
+                out.println(rep1.getIdcontrol() + "\t" + rep1.getControl() + "\t" + rep1.getNivel() + "\t" + rep1.getLevel() + "\t" + rep1.getImpl());
+            }
+        } finally {
+            out.close();
+        }
+    }
+
+    private void reporte6(HttpServletRequest request, HttpServletResponse response) throws IOException {
+        response.setContentType("application/vnd.ms-excel");
+        response.setHeader("Content-disposition", "filename=evaluacion_trim.xls");
+        PrintWriter out = response.getWriter();
+        try {
+            List<Pivot> r = cnn.listarReporte6();
+            out.println("IdControl\tControl\tPeriodo\tIdNivel\tNivel\tHallazgo\tRecomendacion\tUsuarioEvaluacion\tFechaEvaluacion");
+            for (Pivot rep1 : r) {
+                out.println(rep1.getIdcontrol() + "\t" + rep1.getControl() + "\t" + rep1.getPeriodo() + "\t" + rep1.getNivel() + "\t" + rep1.getLevel() + "\t" + rep1.getHallazgo() + "\t" + rep1.getRecomendacion() + "\t" + rep1.getUsuario() + "\t" + rep1.getFecha());
+            }
+        } finally {
+            out.close();
+        }
+    }
+
+    private void grafica1(HttpServletRequest request, HttpServletResponse response) throws IOException {
+        //List graf1 = cnn.listarGrafica1();
+        //HttpSession sesion = request.getSession();
+        //sesion.setAttribute("graf1", graf1);
+        response.sendRedirect("grafica1.jsp");
+    }
+
+    private void grafica2(HttpServletRequest request, HttpServletResponse response) throws IOException {
+        response.sendRedirect("grafica2.jsp");
+    }
+
+    private void grafica3(HttpServletRequest request, HttpServletResponse response) throws IOException {
+        response.sendRedirect("grafica3.jsp");
+    }
+
+    private void grafica4(HttpServletRequest request, HttpServletResponse response) throws IOException {
+        response.sendRedirect("grafica4.jsp");
     }
 }

@@ -16,7 +16,8 @@ public class ControlDaoImpl implements ControlDao {
     public List<Control> listar() {
         consultaControles = em.createNamedQuery("Control.findAll", Control.class);
         consultaControles.setParameter("estado", "A");
-        List<Control> listaControl = consultaControles.getResultList();
+        List<Control> listaControl = null;
+        listaControl = consultaControles.getResultList();
         return listaControl;
     }
 

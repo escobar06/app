@@ -8,11 +8,11 @@
                     <i class="fas fa-home"></i> Inicio
                 </a>
             </div>
-            <div class="col-md-3">
-                <a href="${pageContext.request.contextPath}/ServletControlador?accion=evaluacion" class="btn btn-primary">
+            <!-- div class="col-md-3">
+                <a href="$pageContext.request.contextPath}/ServletControlador?accion=evaluacion" class="btn btn-primary">
                     <i class="fa fa-line-chart"></i> Evaluación
                 </a>
-            </div>
+            </div -->
             <div class="col-md-3">
                 <a href="${pageContext.request.contextPath}/ServletControlador?accion=grafica" class="btn btn-primary">
                     <i class="fas fa-file"></i> Gráficas

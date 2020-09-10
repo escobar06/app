@@ -14,17 +14,21 @@ public class Evalua implements Serializable{
     private int idperiodo;
     private int idimpacto;
     private int idsolucion;
+    private int implementa;
+    private int bandera;
 
     public Evalua() {
 
     }
 
-    public Evalua(int idcontrol, int idnivel) {
+    public Evalua(int idcontrol, int idnivel, int implementa, int bandera) {
         this.idcontrol = idcontrol;
         this.idnivel = idnivel;
+        this.implementa = implementa;
+        this.bandera = bandera;
     }
 
-    public Evalua(String hallazgo, String recomendacion, String usuario_evaluacion, Date fecha_evaluacion, int idcontrol, int idproyecto, int idperiodo, int idimpacto, int idsolucion) {
+    public Evalua(String hallazgo, String recomendacion, String usuario_evaluacion, Date fecha_evaluacion, int idcontrol, int idproyecto, int idperiodo, int idimpacto, int idsolucion, int idnivel) {
         this.hallazgo = hallazgo;
         this.recomendacion = recomendacion;
         this.usuario_evaluacion = usuario_evaluacion;
@@ -34,6 +38,23 @@ public class Evalua implements Serializable{
         this.idperiodo = idperiodo;
         this.idimpacto = idimpacto;
         this.idsolucion = idsolucion;
+        this.idnivel = idnivel;
+    }
+
+    public int getBandera() {
+        return bandera;
+    }
+
+    public void setBandera(int bandera) {
+        this.bandera = bandera;
+    }
+
+    public int getImplementa() {
+        return implementa;
+    }
+
+    public void setImplementa(int implementa) {
+        this.implementa = implementa;
     }
 
     public int getIdnivel() {

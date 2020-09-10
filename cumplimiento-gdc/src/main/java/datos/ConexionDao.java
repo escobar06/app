@@ -33,4 +33,14 @@ public class ConexionDao {
             ex.printStackTrace(System.out);
         }
     }    
+
+    public static void closeUpdate(Connection cnn,PreparedStatement ps,PreparedStatement ps1){
+        try {
+            ps.close();
+            ps1.close();
+            cnn.close();
+        } catch (SQLException ex) {
+            ex.printStackTrace(System.out);
+        }
+    }    
 }

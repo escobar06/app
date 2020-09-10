@@ -9,7 +9,7 @@
                 <a href="${pageContext.request.contextPath}/ServletControlador?accion=listar&lista=control" class="btn btn-ligth btn-block">
                     <!-- fa-arrow-left = icono <- -->
                     <i class="fas fa-arrow-left"></i> Regresar al inicio
-                </a>
+                </a> 
             </div>
             <div class="col-md-3">
                 <!-- btn-success = boton color verde -->

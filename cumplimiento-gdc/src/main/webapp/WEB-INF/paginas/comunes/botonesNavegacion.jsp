@@ -14,11 +14,11 @@
                     <i class="fas fa-plus"></i> Evaluación
                 </a>
             </div>
-            <div class="col-md-2">
-                <a href="${pageContext.request.contextPath}/ServletControlador?accion=evaluacion" class="btn btn-primary">
+            <!-- div class="col-md-2">
+                <a href="$pageContext.request.contextPath}/ServletControlador?accion=evaluacion" class="btn btn-primary">
                     <i class="fa fa-line-chart"></i> Evaluación
                 </a>
-            </div>
+            </div -->
             <div class="col-md-2">
                 <a href="${pageContext.request.contextPath}/ServletControlador?accion=grafica" class="btn btn-primary">
                     <i class="fa fa-line-chart"></i> Gráficas
